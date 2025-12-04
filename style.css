@@ -1,0 +1,438 @@
+@charset "UTF-8";
+.splitting .word, .splitting .char {
+    display:inline-block
+}
+
+.splitting .char {
+    position:relative
+}
+
+.splitting .char:before, .splitting .char:after {
+    content: attr(data-char);
+    position: absolute;
+    top: 0;
+    left: 0;
+    visibility: hidden;
+    transition: inherit;
+    user-select:none
+}
+
+.splitting {
+    --word-center: calc((var(--word-total) - 1) / 2);
+    --char-center: calc((var(--char-total) - 1) / 2);
+    --line-center: calc((var(--line-total) - 1) / 2)
+}
+
+.splitting .word {
+    --word-percent: calc(var(--word-index) / var(--word-total));
+    --line-percent: calc(var(--line-index) / var(--line-total))
+}
+
+.splitting .char {
+    --char-percent: calc(var(--char-index) / var(--char-total));
+    --char-offset: calc(var(--char-index) - var(--char-center));
+    --distance: calc((var(--char-offset) * var(--char-offset)) / var(--char-center));
+    --distance-sine: calc(var(--char-offset) / var(--char-center));
+    --distance-percent: calc((var(--distance) / var(--char-center)))
+}
+
+.splitting.cells img {
+    width: 100%;
+    display:block
+}
+
+@supports (display: grid) {
+    .splitting.cells {
+        position: relative;
+        overflow: hidden;
+        background-size: cover;
+        visibility:hidden
+    }
+
+    .splitting .cell-grid {
+        background: inherit;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: grid;
+        grid-template:repeat(var(--row-total), 1fr)/repeat(var(--col-total), 1fr)
+    }
+
+    .splitting .cell {
+        background: inherit;
+        position: relative;
+        overflow:hidden
+    }
+
+    .splitting .cell-inner {
+        background: inherit;
+        position: absolute;
+        visibility: visible;
+        width: calc(100% * var(--col-total));
+        height: calc(100% * var(--row-total));
+        left: calc(-100% * var(--col-index));
+        top:calc(-100% * var(--row-index))
+    }
+
+    .splitting .cell {
+        --center-x: calc((var(--col-total) - 1) / 2);
+        --center-y: calc((var(--row-total) - 1) / 2);
+        --offset-x: calc(var(--col-index) - var(--center-x));
+        --offset-y: calc(var(--row-index) - var(--center-y));
+        --distance-x: calc((var(--offset-x) * var(--offset-x)) / var(--center-x));
+        --distance-y: calc((var(--offset-y) * var(--offset-y)) / var(--center-y))
+    }
+}
+
+*, *:before, *:after {
+    box-sizing:border-box
+}
+
+body, h1, h2, h3, h4, p, figure, blockquote, dl, dd {
+    margin:0
+}
+
+ul[role=list], ol[role=list] {
+    list-style:none
+}
+
+html:focus-within {
+    scroll-behavior:smooth
+}
+
+body {
+    min-height: 100vh;
+    text-rendering: optimizeSpeed;
+    line-height:1.5
+}
+
+a:not([class]) {
+    text-decoration-skip-ink:auto
+}
+
+img, picture, video {
+    max-width: 100%;
+    height: auto;
+    display:block
+}
+
+input, button, textarea, select {
+    font:inherit
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html:focus-within {
+        scroll-behavior:auto
+    }
+
+    *, *:before, *:after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+        scroll-behavior:auto !important
+    }
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight:400
+}
+
+h1, .h1 {
+    font-size: 4.5rem;
+    letter-spacing: .06em;
+    line-height:1;
+    font-family: 'Playfair Display', serif;
+    font-weight: 600
+}
+
+@media screen and (min-width: 37.5em) {
+    h1, .h1 {
+        font-size:6.5rem
+    }
+}
+
+h2, .h2 {
+    font-size: 2.8rem;
+    letter-spacing: -.01em;
+    line-height:1;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400
+}
+
+@media screen and (min-width: 37.5em) {
+    h2, .h2 {
+        font-size:3.5rem
+    }
+}
+
+:root {
+    --color-black: #101010;
+    --color-white: #ffffff;
+    --color-lightgrey: #ededed;
+    --color-grey: #c9c9c9;
+    --color-darkgrey: #434343;
+    --font-family-body: "Inter", "Helvetica Neue", "Helvetica", sans-serif;
+    --font-size-body: 1.6rem;
+    --font-weight-body: 400;
+    --spacing-xsmall: 1rem;
+    --spacing-small: 2rem;
+    --spacing-medium: 3rem;
+    --spacing-large: 4rem;
+    --spacing-xlarge: 6rem;
+    --timing-fast: .1s;
+    --timing-reg: .3s;
+    --timing-slow: .5s;
+    --level1: 100;
+    --level2: 200;
+    --level3: 300;
+    --level4: 400;
+    --level5: 500;
+    --scrollbar: 0px;
+    --vh: 100vh;
+    --col-spacing: .5rem;
+    --site-gutter: 0px
+}
+
+
+::selection {
+    background-color: var(--color-white);
+    color:var(--color-black)
+}
+
+html {
+    font-size: 62.5%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: var(--font-family-body);
+    font-weight:300
+}
+
+body {
+    font-size: var(--font-size-body);
+    font-family: var(--font-family-body);
+    font-weight: var(--font-weight-body);
+    background-color: var(--color-white);
+    color:var(--color-black)
+}
+
+body.page--home {
+    color:var(--color-white)
+}
+
+body.working {
+    cursor:wait
+}
+
+body.stop-scrolling {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow:hidden
+}
+
+a {
+    display: inline-block;
+    text-decoration: none;
+    color: currentColor;
+    cursor:pointer
+}
+
+a:active, a:focus {
+    outline:none
+}
+
+.grid-outer {
+    padding-left: var(--site-gutter);
+    padding-right:var(--site-gutter)
+}
+
+.grid-inner {
+    padding-left: var(--col-spacing);
+    padding-right:var(--col-spacing)
+}
+
+
+.load-in {
+    opacity: 0;
+    visibility:hidden
+}
+
+video.js-lazy {
+    opacity: 0;
+    transition:opacity var(--timing-reg) ease
+}
+
+video.js-lazy.loaded {
+    opacity:1
+}
+
+
+.hero-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100vh;
+    min-height: var(--vh);
+    display: flex;
+    flex-direction: column;
+    align-items:center
+}
+
+@media screen and (min-width: 37.5em) {
+    .hero-wrapper {
+        min-height:100vh
+    }
+}
+
+.hero {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    width:100%
+}
+
+.hero.hide {
+    opacity: 0;
+    pointer-events:none
+}
+
+.hero img, .hero video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity var(--timing-reg) linear;
+    opacity:0
+}
+
+.hero img.loaded, .hero video.loaded {
+    opacity:1
+}
+
+.hero--video {
+    z-index:2
+}
+
+.hero__content {
+    position: relative;
+    margin: auto;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12rem;
+    margin-left: 1rem;
+    margin-right:1rem
+}
+
+@media screen and (min-width: 56.25em) {
+    .hero__content {
+        gap:15rem
+    }
+}
+
+.hero__content svg {
+    width: 100%;
+    max-width: 25rem;
+    height: auto;
+    opacity:0
+}
+
+@media screen and (min-width: 56.25em) {
+    .hero__content svg {
+        max-width:60rem
+    }
+}
+
+.hero__text {
+    text-align: center
+}
+
+.hero__title {
+    text-align: center
+}
+
+.hero__tagline {
+    text-align: center;
+    font-size: 2.8rem;
+    letter-spacing: .08rem;
+    line-height: 1.125;
+    max-width: 23ch;
+    opacity:0;
+    margin-top: 2rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 300
+}
+
+@media screen and (min-width: 56.25em) {
+    .hero__tagline {
+        font-size: 3.8rem;
+        letter-spacing: .12rem;
+        line-height: 1.2;
+        max-width:none;
+        margin-top: 2rem
+    }
+}
+
+.site-wrapper {
+    position: relative
+}
+
+:root {
+    --header-height: 5.4rem
+}
+
+body.page--home {
+    --header-height: 2.3rem
+}
+
+.header {
+    display: block;
+    width: 100%;
+    height:var(--header-height)
+}
+
+body.page--home .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index:var(--level4)
+}
+
+.header__inner {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding-top:.8rem
+}
+
+.header__inner a {
+    text-transform: uppercase;
+    font-size: 2.8rem;
+    letter-spacing: .08rem;
+    line-height: 1.125;
+    width:30%;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400
+}
+
+.header__inner a:last-child {
+    text-align:right
+}
+
+@media screen and (min-width: 37.5em) {
+    .header__inner a {
+        font-size: 3.5rem;
+        letter-spacing: .1rem;
+        width:20%
+    }
+}

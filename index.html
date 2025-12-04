@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>B&Onyx Fashion Consulting LLC</title>
+
+  <script type="module">
+    document.documentElement.classList.remove('no-js');
+    document.documentElement.classList.add('js');
+  </script>
+
+  <meta name="description" content="B&Onyx Fashion Consulting LLC - Brand Experiences, Campaigns, Production" />
+  <link rel="canonical" href="https://bnonyx.com/" />
+
+  <link rel='stylesheet' href='style.css' type='text/css' media='all' />
+</head>
+
+<body class="page page--home js-body">
+
+  <header class="header js-header">
+    <div class="grid-outer">
+      <div class="header__inner grid-inner js-nav">
+        <a href="mailto:info@bnonyx.com">
+          Contact
+        </a>
+
+
+        <a href="https://www.instagram.com/thebaixue/" target="_blank">
+          Instagram
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="site-wrapper">
+    <section class="hero-wrapper js-hero-fixed">
+
+      <picture class="hero js-hero">
+        <img src="background_cover.jpg" alt="" class="hero__media" decoding="async" loading="eager"
+          fetchpriority="high" />
+
+      </picture>
+      <div class="hero hero--video js-hero"> <video class="hero__media js-lazy" preload="none" muted="" autoplay="" loop
+          data-poster="background_cover.jpg" playsinline data-src="background_video.mp4">
+        </video>
+      </div>
+      <div class="hero__content grid-outer">
+        <div class="grid-inner hero__text">
+          <h1 class="hero__title">B&amp;ONYX FASHION CONSULTING</h1>
+          <h2 class="hero__tagline js-tagline" data-splitting>BRAND EXPERIENCES – CAMPAIGNS – PRODUCTION</h2>
+        </div>
+      </div>
+    </section>
+  </main>
+
+
+
+  <script type="text/javascript">
+    const vh = window.innerHeight;
+    document.documentElement.style.setProperty('--vh', vh + 'px');
+
+    const getScrollbarWidth = () => {
+      // Create a temporary div container and append it into the body
+      const container = document.createElement('div');
+      // Append the container in the body
+      document.body.appendChild(container);
+      // Force scrollbar on the container
+      container.style.overflow = 'scroll';
+
+      // Add ad fake div inside the container
+      const inner = document.createElement('div');
+      container.appendChild(inner);
+
+      // Calculate the width based on the container width minus its child width
+      const width = container.offsetWidth - inner.offsetWidth;
+      // Remove the container from the body
+      document.body.removeChild(container);
+
+      return width;
+    };
+
+    // Get the scrollbar dimension
+    const scrollbarWidth = getScrollbarWidth();
+
+    // Set a custom property with the value we calculated
+    document.documentElement.style.setProperty('--scrollbar', scrollbarWidth + 'px');
+  </script>
+
+  <script src="main.js"></script>
+</body>
+
+</html>
